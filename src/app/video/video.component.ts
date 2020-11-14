@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormControl, Validators } from '@angular/forms';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
@@ -13,6 +14,13 @@ declare var MediaRecorder: any;
 export class VideoComponent implements OnInit {
 deviceId = '';
 file: File;
+
+video = {
+  video_title : '',
+  video_description : '',
+  video_file_location : ''
+
+};
 
 title: string;
 description: string;
@@ -108,6 +116,9 @@ description: string;
     const description = formValues.description;
     console.log(formValues);
     let ControlFlag = false; // variable de controle des validation
+    this.video.video_title = title;
+    this.video.video_description = description;
+    this.video.video_file_location = 'No Yet Defined';
 
     let control = new FormControl(title, [Validators.minLength(5), Validators.required]);
     if (control.errors) {
@@ -127,11 +138,26 @@ description: string;
     // definition du champ name='photo' dont la valeur est le fichier à uploader
     fd.append('title', title);
     fd.append('description', description);
-    return this.http.post(`http://localhost:3000/videos/upload?video_title=${title}&video_description=${description}`, fd).subscribe(
+    this.http.post('http://localhost:3000/api/videos', this.video).subscribe(
+      (data)  =>  {
+        console.log('success');
+        // upload file
+        this.http.post(`http://localhost:3000/api/videos/upload`, fd).subscribe(
+      (data)  =>  {
+        console.log('file uploaded succefully');
+      }
+    );
+
+      },
+      (err) =>  {
+        console.log(err);
+      }
+    );
+    /* return this.http.post(`http://localhost:3000/videos/upload?video_title=${title}&video_description=${description}`, fd).subscribe(
       (data)  =>  {
         console.log('success');
       }
-    );
+    ); */
     }
   }
 
