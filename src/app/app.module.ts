@@ -12,6 +12,10 @@ import { SharedDataService } from './services/shared-data.service';
 import { BuilderService } from './services/builder.service';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { VideoComponent } from './video/video.component';
+import { WebcamModule } from 'ngx-webcam';
+import { Video2Component } from './video2/video2.component';
+import { Video1Component } from './video1/video1.component';
 
 const toastrConfig = {
   timeOut: 3000,
@@ -30,11 +34,15 @@ const toastrConfig = {
     SingleGuestComponent,
     EventListComponent,
     NewEventComponent,
-    SampleComponent
+    SampleComponent,
+    VideoComponent,
+    Video2Component,
+    Video1Component
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    WebcamModule,
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot(toastrConfig),
