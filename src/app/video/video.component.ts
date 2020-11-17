@@ -169,20 +169,22 @@ filename = 'filename will be showed here';
 
 
   saveVideoInformation(): void {
-    let ControlFlag = true; // variable de controle des validation
-    /* this.video.video_title = this.title;
-    this.video.video_description = this.description;
-    this.video.video_file_location = 'No Yet Defined';
+    let ControlFlag = false; // variable de controle des validation
 
-    let control = new FormControl(this.title, [Validators.minLength(5), Validators.required]);
+    let control = new FormControl(this.video.video_title, [Validators.minLength(5), Validators.required]);
     if (control.errors) {
       ControlFlag = true;
     }
 
-    control = new FormControl(this.description, [Validators.minLength(5), Validators.required]);
+    control = new FormControl(this.video.video_description, [Validators.minLength(5), Validators.required]);
     if (control.errors) {
       ControlFlag = true;
-    } */
+    }
+
+    control = new FormControl(this.video.video_file_location, [Validators.minLength(5), Validators.required]);
+    if (control.errors) {
+      ControlFlag = true;
+    }
 
     if (ControlFlag === true) {
       // message d'erreur
@@ -215,8 +217,6 @@ filename = 'filename will be showed here';
               return video;
             }
           );
-
-          console.log(this.videosList);
         } else {
           this.toastr.error(res.error, 'Error');
         }
